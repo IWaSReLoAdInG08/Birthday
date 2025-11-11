@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
-  <title>Happy Birthday!!!</title>
+  <title>İyi Ki Doğdun!!!</title>
 
   <link rel="stylesheet" href="styles/flexbox-center-container.css" media="all">
   <link rel="stylesheet" href="styles/system-fonts.css" media="all">
@@ -15,13 +15,21 @@
   <canvas id=c></canvas>
   <canvas id="confetti"></canvas>
   <div class="container" id="count">
-    <h1 id="head">Countdown to your birthday:</h1>
+    <h1 id="head">İyi Ki Doğdun, <span class="name-highlight">Nurbanu</span>!</h1>
+    <p class="subtitle">Kutlamana kalan süre:</p>
     <ul>
-      <li><span id="day"></span>days</li>
-      <li><span id="hour"></span>Hours</li>
-      <li><span id="minute"></span>minutes</li>
-      <li><span id="second"></span>seconds</li>
+      <li><span id="day"></span>gün</li>
+      <li><span id="hour"></span>Saat</li>
+      <li><span id="minute"></span>dakika</li>
+      <li><span id="second"></span>saniye</li>
     </ul>
+  </div>
+  <div class="post-actions" id="post-actions" hidden>
+    <div class="post-actions__buttons">
+      <a class="quiz-button" href="quiz.html">Quiz Yap</a>
+      <a class="letter-button" href="confession.html" id="letter-button">Mektubu Oku</a>
+      <a class="memories-button" href="memories.html">Anılarımız 🌙</a>
+    </div>
   </div>
   <div id="merrywrap" class="merrywrap">
     <canvas id="snowfall"></canvas>
@@ -31,8 +39,23 @@
       </div>
       <div class="box"></div>
     </div>
+  </div>
+  <div id="letter-modal" class="letter-modal" hidden>
+    <div class="letter-card" role="dialog" aria-modal="true" aria-labelledby="letter-title">
+      <button class="letter-close" id="letter-close" aria-label="Mektubu kapat">&times;</button>
+      <h2 class="letter-title" id="letter-title">Benden Bir Mektup</h2>
+      <div class="letter-text">
+        <span id="typewriter"></span><span class="caret"></span>
+      </div>
+      <button id="heart-toggle" class="heart-button" aria-expanded="false" aria-controls="letter-more">❤️</button>
+      <div id="letter-more" class="letter-more" hidden>
+        Düşündüğünden daha çok önemsiyorum seni 💖
+      </div>
+    </div>
+  </div>
+  <audio id="bg-audio" src="https://cdn.pixabay.com/audio/2022/10/14/audio_15d3f612ee.mp3" autoplay loop preload="auto" muted playsinline></audio>
+  <script src="scripts/confetti.min.js" charset="utf-8"></script>
+  <script src="scripts/index.js" charset="utf-8"></script>
 </body>
-<script src="scripts/confetti.min.js" charset="utf-8"></script>
-<script src="scripts/index.js" charset="utf-8"></script>
 
 </html>

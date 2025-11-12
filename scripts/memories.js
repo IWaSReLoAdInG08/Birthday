@@ -55,8 +55,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   /* --- Leave Your Mark (canvas) --- */
-  // Upload server base (defaults to localhost:3000). You can override by setting window.UPLOAD_BASE
-  const UPLOAD_BASE = window.UPLOAD_BASE || (location.protocol + '//' + location.hostname + ':3000');
+  // Upload server base (defaults to same origin). You can override by setting window.UPLOAD_BASE
+  // When deployed to Vercel the API endpoints are at /api/upload and /api/uploads
+  const UPLOAD_BASE = window.UPLOAD_BASE || '';
   const canvas = document.getElementById('signature-canvas');
   if (canvas && window.SignaturePad) {
     // resize canvas to proper pixel ratio
@@ -94,19 +95,12 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
           saveBtn.disabled = true;
           saveBtn.textContent = 'Uploading...';
-          // Convert dataURL to Blob
+          // Send the dataURL as JSON to serverless API (works on Vercel)
           const dataUrl = signaturePad.toDataURL('image/png');
-          const res = await fetch(dataUrl);
-          const blob = await res.blob();
-
-          const form = new FormData();
-          const filename = 'doodle_' + Date.now() + '.png';
-          form.append('file', blob, filename);
-
-          // POST to server upload endpoint (needs to be implemented server-side)
-          const uploadResp = await fetch(UPLOAD_BASE + '/upload', {
+          const uploadResp = await fetch(UPLOAD_BASE + '/api/upload', {
             method: 'POST',
-            body: form
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: dataUrl })
           });
 
           if (!uploadResp.ok) throw new Error('Upload failed');

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Doğum günü yıldızını ne kadar tanıyorsun?</title>
+    <link rel="stylesheet" href="styles/system-fonts.css" media="all" />
+    <link rel="stylesheet" href="styles/quiz.css" media="all" />
+  </head>
+  <body>
+    <main class="quiz-container">
+      <header class="quiz-header">
+        <p class="eyebrow">Doğum Günü Mücadelesi</p>
+        <h1>Doğum günü yıldızını ne kadar tanıyorsun?</h1>
+        <p class="intro">
+          Nurbanu&apos;nun özel gününü birkaç eğlenceli soruyla kutla.
+          Cevaplarını gönder ve sonucunu ve özel mesajını gör.
+        </p>
+      </header>
+      <form id="quiz-form" class="quiz-form">
+        <fieldset>
+          <legend>1. İlk ne zaman gerçekten yakın arkadaş olduğumuzu fark ettin?</legend>
+          <label><input type="radio" name="q1" value="a" required /> Gece yarısı derin sohbetlerimizden birinden sonra</label>
+          <label><input type="radio" name="q1" value="b" /> Aptal bir şey üzerine gülmeyi bırakamadığımızda</label>
+          <label><input type="radio" name="q1" value="c" /> Kişisel şeyler paylaşmaya başladığımızda</label>
+          <label><input type="radio" name="q1" value="d" /> Bilmiyorum sadece bir anda oldu</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>2. Şu anda Türkiye&apos;de buluşabilseydik, ilk durağımız ne olurdu?</legend>
+          <label><input type="radio" name="q2" value="a" required /> Kapadokya&apos;daki sıcak hava balonları 🎈</label>
+          <label><input type="radio" name="q2" value="b" /> İstanbul&apos;da Boğaz boyunca bir yürüyüş 🌉</label>
+          <label><input type="radio" name="q2" value="c" /> İzmir&apos;de sokak yemeği avı 🍢</label>
+          <label><input type="radio" name="q2" value="d" /> Türk çayı ile rahat bir kafe ☕</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>3. En çok hangi Türkçe kelimeyi kullanıyorum (ya da en azından deniyorum)?</legend>
+          <label><input type="radio" name="q3" value="a" required /> Canım (sevgilim)</label>
+          <label><input type="radio" name="q3" value="b" /> Güzel (güzel)</label>
+          <label><input type="radio" name="q3" value="c" /> Yavaş (yavaş ol 😅)</label>
+          <label><input type="radio" name="q3" value="d" /> Aşkım (aşkım)</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>4. Arkadaşlığımızı bir cümleyle nasıl tanımlarsın?</legend>
+          <label><input type="radio" name="q4" value="a" required /> Kaos ve rahatlık birleşimi</label>
+          <label><input type="radio" name="q4" value="b" /> İki farklı dünya, aynı dalga boyu</label>
+          <label><input type="radio" name="q4" value="c" /> Online başlayan ama gerçek gibi hissettiren bir hikaye</label>
+          <label><input type="radio" name="q4" value="d" /> En sevdiğim diziden daha duygusal</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>5. Sessizce söylemediğimi ama her zaman kastettiğimi düşündüğün bir şey nedir?</legend>
+          <label><input type="radio" name="q5" value="a" required /> &quot;Seni gerçekten önemsiyorum.&quot;</label>
+          <label><input type="radio" name="q5" value="b" /> &quot;Özür dilerim.&quot;</label>
+          <label><input type="radio" name="q5" value="c" /> &quot;Seni özlüyorum.&quot;</label>
+          <label><input type="radio" name="q5" value="d" /> &quot;Aslında günümü daha iyi yapıyorsun.&quot;</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>6. Bunlardan hangisi en &apos;biz&apos; şey?</legend>
+          <label><input type="radio" name="q6" value="a" required /> Bir yazım hatası üzerine 10 dakika gülmek</label>
+          <label><input type="radio" name="q6" value="b" /> Gece 2&apos;de birbirimizi teselli etmek</label>
+          <label><input type="radio" name="q6" value="c" /> Ciddi cevaplar yerine meme göndermek</label>
+          <label><input type="radio" name="q6" value="d" /> Hepsi, tabii ki</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>7. Ülkemden sana bir sürpriz yapmak zorunda olsaydım, ne seçerdim?</legend>
+          <label><input type="radio" name="q7" value="a" required /> Yerel bir atıştırmalık kutusu</label>
+          <label><input type="radio" name="q7" value="b" /> El yazımla bir mektup</label>
+          <label><input type="radio" name="q7" value="c" /> El yapımı bir bileklik</label>
+          <label><input type="radio" name="q7" value="d" /> En sevdiğim şarkılarla dolu bir çalma listesi</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>8. Sende gizlice hayran olduğum bir şey nedir?</legend>
+          <label><input type="radio" name="q8" value="a" required /> Baskı altında sakin kalma şeklin</label>
+          <label><input type="radio" name="q8" value="b" /> Mizah anlayışın</label>
+          <label><input type="radio" name="q8" value="c" /> İnsanları ne kadar derinden önemsediğin</label>
+          <label><input type="radio" name="q8" value="d" /> Bağımsızlığın ve özgüvenin</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>9. Bir &quot;Arkadaşlık Marşı&quot;mız olsaydı, nasıl olurdu?</legend>
+          <label><input type="radio" name="q9" value="a" required /> Sakin Türk lo-fi</label>
+          <label><input type="radio" name="q9" value="b" /> 2000&apos;ler pop, bağırarak söylerdik</label>
+          <label><input type="radio" name="q9" value="c" /> Yumuşak duygusal melodi</label>
+          <label><input type="radio" name="q9" value="d" /> Tam kaos her tür karışık</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>10. Sana doğum gününü en &apos;ben&apos; şekilde nasıl kutlardım?</legend>
+          <label><input type="radio" name="q10" value="a" required /> Seni ağlatan uzun duygusal bir mesaj 😭</label>
+          <label><input type="radio" name="q10" value="b" /> Komik bir meme ve ardından içten bir paragraf</label>
+          <label><input type="radio" name="q10" value="c" /> Kısa bir &quot;İyi ki doğdun, canım 💖&quot;</label>
+          <label><input type="radio" name="q10" value="d" /> Bir sürpriz bir web sitesi gibi yaratıcı bir şey 😉</label>
+        </fieldset>
+
+        <button type="submit" class="submit-btn">Sonucumu Gör</button>
+      </form>
+
+      <section id="results" class="results" hidden>
+        <h2>Quiz Sonucun</h2>
+        <p class="score"></p>
+        <p class="message"></p>
+        <p class="bonus">&quot;Beni WiFi&apos;nin konumunu bildiğinden daha iyi tanıyorsun Tebrikler, Canım! 🎉&quot;</p>
+        <a class="back-link" href="index.html">⬅ Kutlamaya dön</a>
+      </section>
+    </main>
+    <script src="scripts/quiz.js" charset="utf-8"></script>
+  </body>
+</html>

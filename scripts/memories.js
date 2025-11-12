@@ -53,5 +53,121 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+
+  /* --- Leave Your Mark (canvas) --- */
+  // Upload server base (defaults to localhost:3000). You can override by setting window.UPLOAD_BASE
+  const UPLOAD_BASE = window.UPLOAD_BASE || (location.protocol + '//' + location.hostname + ':3000');
+  const canvas = document.getElementById('signature-canvas');
+  if (canvas && window.SignaturePad) {
+    // resize canvas to proper pixel ratio
+    function resizeCanvas() {
+      const ratio = Math.max(window.devicePixelRatio || 1, 1);
+      canvas.width = canvas.offsetWidth * ratio;
+      canvas.height = canvas.offsetHeight * ratio;
+      canvas.getContext('2d').scale(ratio, ratio);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const signaturePad = new SignaturePad(canvas, {
+      backgroundColor: 'rgba(255,255,255,0)',
+      penColor: '#222'
+    });
+
+    const clearBtn = document.getElementById('clear-canvas');
+    const saveBtn = document.getElementById('save-canvas');
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        signaturePad.clear();
+      });
+    }
+
+    if (saveBtn) {
+      saveBtn.addEventListener('click', async () => {
+        if (signaturePad.isEmpty()) {
+          // nothing drawn
+          saveBtn.textContent = 'Draw something first';
+          setTimeout(() => saveBtn.textContent = 'Save', 1200);
+          return;
+        }
+        try {
+          saveBtn.disabled = true;
+          saveBtn.textContent = 'Uploading...';
+          // Convert dataURL to Blob
+          const dataUrl = signaturePad.toDataURL('image/png');
+          const res = await fetch(dataUrl);
+          const blob = await res.blob();
+
+          const form = new FormData();
+          const filename = 'doodle_' + Date.now() + '.png';
+          form.append('file', blob, filename);
+
+          // POST to server upload endpoint (needs to be implemented server-side)
+          const uploadResp = await fetch(UPLOAD_BASE + '/upload', {
+            method: 'POST',
+            body: form
+          });
+
+          if (!uploadResp.ok) throw new Error('Upload failed');
+
+          // show success
+          saveBtn.textContent = 'Saved';
+          createSparkles(12, canvas);
+
+          // refresh uploaded gallery if server provides a listing endpoint
+          loadUploads();
+        } catch (err) {
+          console.error(err);
+          saveBtn.textContent = 'Upload failed';
+          setTimeout(() => saveBtn.textContent = 'Save', 1500);
+        } finally {
+          saveBtn.disabled = false;
+        }
+      });
+    }
+
+    // sparkles on pointerup (when drawing finishes)
+    canvas.addEventListener('pointerup', () => {
+      if (!signaturePad.isEmpty()) createSparkles(6, canvas);
+    });
+
+    // create simple sparkles attached to canvas
+    function createSparkles(count, target) {
+      const rect = target.getBoundingClientRect();
+      for (let i = 0; i < count; i++) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        s.style.left = (rect.left + Math.random() * rect.width) + 'px';
+        s.style.top = (rect.top + Math.random() * rect.height) + 'px';
+        s.style.background = ['#ffd166','#f6b7c1','#9b59b6','#f8c471'][Math.floor(Math.random()*4)];
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 900);
+      }
+    }
+
+    // attempt to load previously uploaded drawings from server
+    async function loadUploads() {
+      const gallery = document.getElementById('uploaded-gallery');
+      if (!gallery) return;
+      try {
+  const r = await fetch(UPLOAD_BASE + '/uploads'); // expects JSON array of image URLs
+        if (!r.ok) return;
+        const list = await r.json();
+        gallery.innerHTML = '';
+        list.forEach(url => {
+          const img = document.createElement('img');
+          img.src = url;
+          img.alt = 'Uploaded doodle';
+          gallery.appendChild(img);
+        });
+      } catch (e) {
+        // ignore if endpoint not present
+      }
+    }
+
+    // initial load of existing uploads
+    loadUploads();
+  }
 });
 

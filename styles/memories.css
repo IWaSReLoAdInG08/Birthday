@@ -99,7 +99,7 @@ body::after {
 .heart:nth-child(8) { left: 80%; animation-delay: 14s; }
 
 .memories-container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -209,35 +209,63 @@ body::after {
   padding: 1rem 0;
 }
 
+/* Song list animation and Spotify embed */
+.song-list { list-style: none; margin-top: 0.5rem; display: grid; gap: 0.4rem; }
+.song-list li { background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85)); padding: 0.6rem 0.8rem; border-radius: 10px; box-shadow: 0 6px 14px rgba(0,0,0,0.06); color: rgba(55,55,65,0.95); font-weight:600; transform: translateY(6px); opacity:0; animation: songIn 600ms ease forwards; }
+.song-list li em { font-style: italic; font-weight:400; color: rgba(55,55,65,0.75); }
+.song-list li:nth-child(1) { animation-delay: 120ms; }
+.song-list li:nth-child(2) { animation-delay: 220ms; }
+.song-list li:nth-child(3) { animation-delay: 320ms; }
+.song-list li:nth-child(4) { animation-delay: 420ms; }
+.song-list li:nth-child(5) { animation-delay: 520ms; }
+.song-list li:nth-child(6) { animation-delay: 620ms; }
+
+@keyframes songIn {
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.spotify-embed { margin-top: 0.75rem; display:flex; justify-content:center; }
+.spotify-embed iframe { width:100%; max-width:520px; height:80px; border-radius:12px; box-shadow: 0 8px 26px rgba(0,0,0,0.12); border:none; }
+
 .memory-collage {
+  /* Collage: grid for overall layout, but items are given rotations,
+     white borders and shadows to create a torn/overlapped look similar
+     to the reference image. */
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, auto);
-  gap: 0.75rem;
+  grid-auto-rows: 220px; /* baseline tile height */
+  gap: 1rem;
   margin: 1.5rem 0;
+  position: relative;
 }
 
 .collage-item {
   position: relative;
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 6px 16px rgba(155, 89, 182, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #fff;
+  /* thick white border to mimic torn paper edge */
+  box-shadow: 0 14px 30px rgba(0,0,0,0.25), 0 2px 6px rgba(0,0,0,0.12) inset;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
   cursor: pointer;
+  border: 10px solid #fff;
+  will-change: transform;
 }
 
 .collage-item:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 12px 24px rgba(155, 89, 182, 0.35);
-  z-index: 2;
+  transform: translateY(-8px) scale(1.03) rotate(0deg);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  z-index: 99;
 }
 
 .collage-item img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* crop slightly to create the scrapbook look */
   display: block;
 }
+
+
 
 .collage-large {
   grid-column: span 2;
@@ -252,6 +280,27 @@ body::after {
 .collage-small {
   grid-column: span 1;
   grid-row: span 1;
+}
+
+/* Apply varied rotations and small positional nudges so tiles overlap
+   and feel organic. We use nth-child selectors for the 8 images. */
+.memory-collage .collage-item:nth-child(1) { transform: rotate(-6deg) translateY(0); z-index: 6; }
+.memory-collage .collage-item:nth-child(2) { transform: rotate(4deg) translateY(12px); z-index: 5; }
+.memory-collage .collage-item:nth-child(3) { transform: rotate(-3deg) translateY(-8px); z-index: 7; }
+.memory-collage .collage-item:nth-child(4) { transform: rotate(6deg) translateY(6px); z-index: 4; }
+.memory-collage .collage-item:nth-child(5) { transform: rotate(-4deg) translateY(-6px); z-index: 8; }
+.memory-collage .collage-item:nth-child(6) { transform: rotate(3deg) translateY(10px); z-index: 3; }
+.memory-collage .collage-item:nth-child(7) { transform: rotate(-5deg) translateY(4px); z-index: 9; }
+.memory-collage .collage-item:nth-child(8) { transform: rotate(5deg) translateY(-4px); z-index: 2; }
+
+/* Slightly pull items out of the grid flow on smaller screens to keep
+   the organic look but avoid overlap that breaks layout. */
+@media (max-width: 768px) {
+  .memory-collage .collage-item:nth-child(1),
+  .memory-collage .collage-item:nth-child(3),
+  .memory-collage .collage-item:nth-child(5) { transform: rotate(-2deg) translateY(0); }
+  .memory-collage .collage-item:nth-child(2),
+  .memory-collage .collage-item:nth-child(4) { transform: rotate(2deg) translateY(0); }
 }
 
 .collage-caption {
@@ -484,6 +533,7 @@ body::after {
 @media (max-width: 768px) {
   .memory-collage {
     grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 200px; /* slightly taller on smaller screens so images don't feel tiny */
   }
 }
 
@@ -520,6 +570,7 @@ body::after {
 
   .memory-collage {
     grid-template-columns: 1fr;
+    grid-auto-rows: 300px; /* taller single-column tiles for mobile viewing */
   }
 
   .collage-large,
@@ -529,4 +580,61 @@ body::after {
     grid-row: span 1;
   }
 }
+
+/* Leave Your Mark canvas styles */
+.leave-mark-section {
+  max-width: 900px;
+  margin: 2rem auto 4rem;
+  padding: 1.5rem;
+}
+.leave-mark-content {
+  background: linear-gradient(180deg, #fff, #fbf8ff);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  text-align: center;
+}
+.leave-mark-sub {
+  color: rgba(55,59,65,0.8);
+  margin-bottom: 0.75rem;
+}
+.canvas-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0 1rem;
+}
+.signature-canvas {
+  width: 100%;
+  max-width: 720px;
+  height: 320px;
+  border-radius: 10px;
+  border: 6px solid #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  background: linear-gradient(180deg, #ffffff, #fffafc);
+  touch-action: none;
+}
+.canvas-controls { display:flex; gap:0.5rem; justify-content:center; margin-bottom:0.5rem; }
+.btn { padding:0.6rem 1rem; border-radius:999px; border:none; background:#eee; cursor:pointer; font-weight:700; }
+.btn.primary { background: linear-gradient(135deg,#9b59b6,#8e44ad); color:#fff; }
+.canvas-note { font-size:0.95rem; color:rgba(55,59,65,0.75); }
+
+/* Sparkles for finish effect */
+.sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.95;
+  transform: translateY(0) scale(1);
+  animation: sparkleUp 900ms ease-out forwards;
+}
+@keyframes sparkleUp {
+  0% { transform: translateY(0) scale(0.7); opacity:1; }
+  100% { transform: translateY(-60px) scale(1.6); opacity:0; }
+}
+
+/* Uploaded gallery thumbnails */
+.uploaded-gallery { display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin-top:0.75rem; }
+.uploaded-gallery img { width:80px; height:80px; object-fit:cover; border-radius:8px; border:4px solid #fff; box-shadow:0 6px 18px rgba(0,0,0,0.12); }
 

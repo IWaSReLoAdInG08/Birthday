@@ -4,7 +4,7 @@ const giftbox = document.getElementById('merrywrap');
 const canvasC = document.getElementById('c');
 
 const config = {
-  birthdate: '2025-11-10T00:00:00+03:00',
+  birthdate: '2025-11-14T00:00:00+03:00',
   name: 'Nurbanu'
 };
 if (head) {

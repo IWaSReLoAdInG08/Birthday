@@ -4,30 +4,9 @@ const giftbox = document.getElementById('merrywrap');
 const canvasC = document.getElementById('c');
 
 const config = {
-  birthdate: '2025-11-14T00:00:00+03:00',
-  name: 'Nurbanu'
+  birthdate: 'Jul 08, 2025',
+  name: 'Sidharth (Badebabuuuuu)'
 };
-if (head) {
-  const nameSpan = head.querySelector('.name-highlight');
-  if (!nameSpan) {
-    head.innerHTML = `İyi Ki Doğdun, <span class="name-highlight">${config.name}</span>!`;
-  }
-}
-const backgroundAudio = document.getElementById('bg-audio');
-if (backgroundAudio) {
-  const enableAudio = () => {
-    backgroundAudio.muted = false;
-    backgroundAudio
-      .play()
-      .catch(() => {
-        /* noop: autoplay might still be blocked */
-      });
-    document.removeEventListener('click', enableAudio);
-    document.removeEventListener('keydown', enableAudio);
-  };
-  document.addEventListener('click', enableAudio, { once: true });
-  document.addEventListener('keydown', enableAudio, { once: true });
-}
 
 function hideEverything() {
   head.style.display = 'none';
@@ -42,128 +21,15 @@ const confettiSettings = { target: 'confetti' };
 const confetti = new window.ConfettiGenerator(confettiSettings);
 confetti.render();
 
-// Letter typewriter & modal
-const letterButton = document.getElementById('letter-button');
-const postActions = document.getElementById('post-actions');
-const letterModal = document.getElementById('letter-modal');
-const letterClose = document.getElementById('letter-close');
-const typewriterTarget = document.getElementById('typewriter');
-const heartToggle = document.getElementById('heart-toggle');
-const letterMore = document.getElementById('letter-more');
-
-const letterText = [
-  'Canım Nurbanu,',
-  '',
-  'Bazı arkadaşlıklar sessizce gelir ve sonra her şey olur.',
-  'Bizimki yazım hatalarına gülmek, gece yarısı sohbetleri ve günlerce süren iç şakalarımız \u{1F609}',
-  '',
-  'Hayat ağırlaştığında, "yavaş yavaş" diyoruz — ve bir şekilde daha hafif geliyor.',
-  'Sen varsın ya, her şey daha güzel \u{1F499}',
-  '',
-  'Bugün, umarım her zaman kastettiğimi hissedersin,',
-  'yüksek sesle söylemesem bile: sen benim için önemlisin. \u2728'
-].join('\n');
-
-function typeText(element, text, speed) {
-  if (!element) return;
-  let i = 0;
-  function tick() {
-    element.textContent = text.slice(0, i++);
-    if (i <= text.length) {
-      setTimeout(tick, speed);
-    }
-  }
-  tick();
-}
-
-let hasTypedLetter = false;
-
-function openLetter() {
-  if (!letterModal) return;
-  letterModal.hidden = false;
-  requestAnimationFrame(() => {
-    letterModal.classList.add('is-visible');
-  });
-  if (!hasTypedLetter && typewriterTarget) {
-    typewriterTarget.textContent = '';
-    typeText(typewriterTarget, letterText, 60);
-    hasTypedLetter = true;
-  }
-}
-
-function closeLetter() {
-  if (!letterModal) return;
-  letterModal.classList.remove('is-visible');
-  setTimeout(() => {
-    letterModal.hidden = true;
-  }, 280);
-  if (heartToggle && letterMore) {
-    heartToggle.setAttribute('aria-expanded', 'false');
-    letterMore.hidden = true;
-  }
-}
-
-if (letterButton) {
-  letterButton.addEventListener('click', openLetter);
-}
-
-if (letterClose) {
-  letterClose.addEventListener('click', closeLetter);
-}
-
-if (letterModal) {
-  letterModal.addEventListener('click', (event) => {
-    if (event.target === letterModal) {
-      closeLetter();
-    }
-  });
-}
-
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && letterModal && !letterModal.hidden) {
-    closeLetter();
-  }
-});
-
-if (heartToggle && letterMore) {
-  heartToggle.addEventListener('click', function () {
-    const expanded = this.getAttribute('aria-expanded') === 'true';
-    const nextState = !expanded;
-    this.setAttribute('aria-expanded', String(nextState));
-    letterMore.hidden = !nextState;
-    if (nextState && letterMore) {
-      letterMore.textContent = 'Düşündüğünden daha çok önemsiyorum seni \u{1F496}';
-    }
-  });
-}
-
 const second = 1000,
   minute = second * 60,
   hour = minute * 60,
   day = hour * 24;
 
-let countDown = new Date(config.birthdate).getTime();
-
-// Initial check on page load
-function updatePostActions() {
-  let now = new Date().getTime(),
-    distance = countDown - now;
-
-  if (postActions) {
-    postActions.hidden = distance > 0;
-  }
-
-  // Letter button is now a link, no need to enable/disable
-}
-
-// Run immediately on load
-updatePostActions();
-
+let countDown = new Date(`${config.birthdate} 00:00:00`).getTime();
 x = setInterval(function() {
   let now = new Date().getTime(),
     distance = countDown - now;
-
-  updatePostActions();
 
   document.getElementById('day').innerText = Math.floor(distance / day);
   document.getElementById('hour').innerText = Math.floor(
@@ -182,7 +48,7 @@ x = setInterval(function() {
     hw = w / 2, // half-width
     hh = h / 2,
     opts = {
-      strings: ['HAPPY', 'BIRTHDAY!', config.name.toUpperCase()],
+      strings: ['HAPPY', 'BIRTHDAY!', config.name],
       charSize: 30,
       charSpacing: 35,
       lineHeight: 40,
